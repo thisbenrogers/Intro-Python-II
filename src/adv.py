@@ -88,38 +88,3 @@ while not game_over:
 
 if game_over:
     print("Game Over")
-
-
-""" OUTPUT from running >>> python adv.py
-* higlighting is author's own
-
-Outside Cave Entrance
-North of you, the cave mount beckons
-
-Choose wisely:
-Enter the first letter of a cardinal direction, or 'q' to quit: n
-
-Foyer
-Dim light filters in from the south. Dusty passages run north and
-east.
-
-Choose wisely:
-Enter the first letter of a cardinal direction, or 'q' to quit: n
-
-* You can't go that way.
-* You are still at the foyer
-
-* You can't go that way.
-* You are still at the overlook
-
-Grand Overlook
-A steep cliff appears before you, falling into the darkness. Ahead to
-the north, a light flickers in the distance, but there is no way
-across the chasm.
-
-Choose wisely:
-Enter the first letter of a cardinal direction, or 'q' to quit: n
-
-You can't go that way.
-You are still at the overlook
-"""
