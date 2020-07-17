@@ -9,4 +9,4 @@ class Room:
 
     def __str__(self):
         desc = "\n".join(textwrap.wrap(self.description))
-        return f'{self.name} room is {desc}'
+        return f'\n{self.name}\n{desc}'
