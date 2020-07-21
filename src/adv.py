@@ -65,23 +65,15 @@ while not game_over:
         game_over = not game_over
         print("\nYou have asked to quit the game")
 
-    elif any([direction == command for direction in ['n', 's', 'e', 'w']]):
+    elif any([direction == command for direction in ('n', 's', 'e', 'w')]):
         dir_key = f'{command}_to'
+        dir_val = room[current_room].__dict__.get(dir_key)
 
-        # this function isn't iterating correctly somehow
-        # outputs 'you can't go' three times if try [W]est from Foyer
-        # seems to need filtering: https://realpython.com/iterate-through-dictionary-python/#filtering-items
-        print(room[current_room].__dict__)
-        for key in room[current_room].__dict__:
-
-            print(key) # This reveals a ton while navigating through rooms via prompt
-
-            if key != dir_key and key != 'name' and key != 'description':
-                    print(f"\nYou can't go that way.\nYou are still at the {player.current_room}")
-
-            elif key == dir_key and key != 'name' and key != 'description':
-                current_room = list(room.keys())[list(room.values()).index(getattr(room[current_room], dir_key))]
-                player.current_room = current_room
+        if dir_val == None:
+            print(f"\nYou can't go that way.\nYou are still at the {player.current_room}")
+        else:
+            current_room = list(room.keys())[list(room.values()).index(getattr(room[current_room], dir_key))]
+            player.current_room = current_room
 
     else:
         print(f"\n{command} isn't a recognized command. Enter the first letter of a cardinal direction or 'q'")
