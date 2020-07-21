@@ -5,6 +5,14 @@ class Player():
         if carrying is None:
             carrying = []
         self.current_room = current_room
+        self.carrying = carrying
+
+        def collect(self, item):
+            from room import Room
+            room[current_room].items.remove(item)
+            self.carrying.append(item)
+
+
         
 
     def __str__(self):
