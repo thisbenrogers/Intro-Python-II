@@ -52,13 +52,12 @@ room['treasure'].s_to = room['narrow']
 
 from player import Player
 
-current_room = 'outside'
 game_over = False
-player = Player(current_room)
+player = Player('outside')
 
 while not game_over:
 
-    print(room[current_room])
+    print(room[player.current_room])
     command = input("\nChoose wisely:\nEnter the first letter of a cardinal direction, or 'q' to quit: ").lower()
 
     if command == 'q':
@@ -67,13 +66,12 @@ while not game_over:
 
     elif any([direction == command for direction in ('n', 's', 'e', 'w')]):
         dir_key = f'{command}_to'
-        dir_val = room[current_room].__dict__.get(dir_key)
+        dir_val = room[player.current_room].__dict__.get(dir_key)
 
         if dir_val == None:
             print(f"\nYou can't go that way.\nYou are still at the {player.current_room}")
         else:
-            current_room = list(room.keys())[list(room.values()).index(getattr(room[current_room], dir_key))]
-            player.current_room = current_room
+            player.current_room = list(room.keys())[list(room.values()).index(getattr(room[player.current_room], dir_key))]
 
     else:
         print(f"\n{command} isn't a recognized command. Enter the first letter of a cardinal direction or 'q'")
