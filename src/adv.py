@@ -57,12 +57,21 @@ player = Player('outside')
 
 while not game_over:
 
-    print(room[player.current_room])
-    command = input("\nChoose wisely:\nEnter the first letter of a cardinal direction, or 'q' to quit: ").lower()
+    print(f"Room info:{room[player.current_room]}\nPlayer info: {player.carrying}")
+
+    if room[player.current_room].items:
+        command = input(f"\nChoose wisely:\nEnter 'C' to Collect {room[player.current_room].items[0]},\nEnter the first letter of a cardinal direction to move, or enter 'q' to quit: ").lower()
+    else:    
+        command = input("\nChoose wisely:\nEnter the first letter of a cardinal direction, or 'q' to quit: ").lower()
 
     if command == 'q':
         game_over = not game_over
         print("\nYou have asked to quit the game")
+
+    elif command == 'c':
+        for item in room[player.current_room].items:
+            room[player.current_room].items.remove(item)
+            player.carrying.append(item)
 
     elif any([direction == command for direction in ('n', 's', 'e', 'w')]):
         dir_key = f'{command}_to'
