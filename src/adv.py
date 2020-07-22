@@ -7,18 +7,18 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", ["Torch", ]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", ["Potion"]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", ["Sword", "Compass"]),
 }
 
 
@@ -36,9 +36,7 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
 # Make a new player object that is currently in the 'outside' room.
-
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +47,43 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+
+from player import Player
+
+game_over = False
+player = Player('outside')
+
+while not game_over:
+
+    print(f"Room info:{room[player.current_room]}\nPlayer info: {player.carrying}")
+
+    if room[player.current_room].items:
+        command = input(f"\nChoose wisely:\nEnter 'C' to Collect {room[player.current_room].items[0]},\nEnter the first letter of a cardinal direction to move, or enter 'q' to quit: ").lower()
+    else:    
+        command = input("\nChoose wisely:\nEnter the first letter of a cardinal direction, or 'q' to quit: ").lower()
+
+    if command == 'q':
+        game_over = not game_over
+        print("\nYou have asked to quit the game")
+
+    elif command == 'c':
+        for item in room[player.current_room].items:
+            room[player.current_room].items.remove(item)
+            player.carrying.append(item)
+
+    elif any([direction == command for direction in ('n', 's', 'e', 'w')]):
+        dir_key = f'{command}_to'
+        dir_val = room[player.current_room].__dict__.get(dir_key)
+
+        if dir_val == None:
+            print(f"\nYou can't go that way.\nYou are still at the {player.current_room}")
+        else:
+            player.current_room = list(room.keys())[list(room.values()).index(getattr(room[player.current_room], dir_key))]
+
+    else:
+        print(f"\n{command} isn't a recognized command. Enter the first letter of a cardinal direction or 'q'")
+
+if game_over:
+    print("Game Over")
